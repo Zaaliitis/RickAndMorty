@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Rick and Morty{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body style="background: #466368; background: linear-gradient(#648880, #293f50); background-attachment: fixed; text-align: center;">
+<div class="flex justify-center" >
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Rick_and_Morty.svg/800px-Rick_and_Morty.svg.png?20220319060844">
+</div>
+<br><br>
+<button class="bg-[#45b0c4]  text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded" onclick="location.href='home'" type="submit">Home</button>
+<button class="bg-[#45b0c4]  text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded" onclick="location.href='locations'" type="submit">Locations</button>
+<button class="bg-[#45b0c4]  text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded" onclick="location.href='episodes'" type="submit">Episodes</button>
+<br><br>
+
+{% block content %}{% endblock %}
+
+
+
+</body>
+</html>
