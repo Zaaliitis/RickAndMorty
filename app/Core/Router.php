@@ -1,17 +1,18 @@
 <?php
 namespace App\Core;
 
+use FastRoute\Dispatcher;
+use function FastRoute\simpleDispatcher;
+
 class Router
 {
-    public static function response(): ?View
+    public static function response(array $routes): ?View
     {
-        $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', [\App\Controllers\Controller::class, "home"]);
-            $r->addRoute('GET', '/search', [\App\Controllers\Controller::class, "search"]);
-            $r->addRoute('GET', '/character', [\App\Controllers\Controller::class, "character"]);
-            $r->addRoute('GET', '/home', [\App\Controllers\Controller::class, "home"]);
-            $r->addRoute('GET', '/location', [\App\Controllers\Controller::class, "location"]);
-            $r->addRoute('GET', '/episode', [\App\Controllers\Controller::class, "episode"]);
+        $dispatcher = simpleDispatcher(function (\FastRoute\RouteCollector $r) use ($routes) {
+            foreach ($routes as $route) {
+                [$httpMethod, $url, $handler] = $route;
+                $r->addRoute($httpMethod, $url, $handler);
+            }
         });
 
         $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -24,14 +25,14 @@ class Router
 
         $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
         switch ($routeInfo[0]) {
-            case \FastRoute\Dispatcher::NOT_FOUND:
+            case Dispatcher::NOT_FOUND:
                 return null;
 
-            case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+            case Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethods = $routeInfo[1];
                 return null;
 
-            case \FastRoute\Dispatcher::FOUND:
+            case Dispatcher::FOUND:
                 $handler = $routeInfo[1];
                 $class = new $handler[0]();
                 $method = $handler[1];
