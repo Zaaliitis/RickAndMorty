@@ -2,12 +2,12 @@
 
 namespace App;
 
-use App\Cache;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use App\Core\Cache;
 use App\Models\Character;
 use App\Models\Episode;
 use App\Models\Location;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use stdClass;
 
 class ApiClient

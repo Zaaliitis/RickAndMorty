@@ -1,5 +1,6 @@
 <?php
-namespace App;
+namespace App\Core;
+
 class Router
 {
     public static function response(): ?View

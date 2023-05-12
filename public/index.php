@@ -1,9 +1,10 @@
 <?php
 require '../vendor/autoload.php';
-use App\Router;
+
+use App\Core\Router;
 
 $response = Router::response();
-$render = new \App\Renderer('/../app/Views');
+$render = new \App\Core\Renderer('/../app/Views');
 echo $render->render($response);
 
 

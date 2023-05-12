@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\ApiClient;
-use App\View;
+use App\Core\View;
 
 class Controller
 {
