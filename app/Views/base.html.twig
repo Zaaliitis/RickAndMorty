@@ -10,16 +10,32 @@
 </head>
 <body style="background: #466368; background: linear-gradient(#648880, #293f50); background-attachment: fixed; text-align: center;">
 <div class="flex justify-center" >
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Rick_and_Morty.svg/800px-Rick_and_Morty.svg.png?20220319060844">
+    <a href="home">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Rick_and_Morty.svg/800px-Rick_and_Morty.svg.png?20220319060844">
+    </a>
 </div>
 <br><br>
-<button class="bg-[#45b0c4]  text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded" onclick="location.href='home'" type="submit">Home</button>
-<button class="bg-[#45b0c4]  text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded" onclick="location.href='locations'" type="submit">Locations</button>
-<button class="bg-[#45b0c4]  text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded" onclick="location.href='episodes'" type="submit">Episodes</button>
+
+<select onchange="location.href='/location?id=' + this.value"
+        class="bg-[#45b0c4] text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded">
+    <option disabled selected>Select a location</option>
+    {% for location in locations %}
+        <option value="{{ location.id }}">{{ location.name }}</option>
+    {% endfor %}
+</select>
+
+<select onchange="location.href='/episode?id=' + this.value"
+        class="bg-[#45b0c4] text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded">
+    <option disabled selected>Select an episode</option>
+    {% for episode in episodes %}
+        <option value="{{ episode.id }}">{{ episode.episodeName }}</option>
+    {% endfor %}
+</select>
+
+
 <br><br>
 
 {% block content %}{% endblock %}
-
 
 
 </body>

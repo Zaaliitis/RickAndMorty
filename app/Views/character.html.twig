@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Characters - Rick and Morty{% endblock %}
+{% block content %}
+    <div class="flex justify-center">
+        <form action="/search" method="GET" class="flex items-center mb-4">
+            <input type="text" name="name" placeholder="Search by name" value="" class="px-4 py-2 border border-gray-300 rounded-md w-48" />
+            <button type="submit" class="ml-4 px-4 py-2 text-[#bddf59] bg-[#45b0c4] border border-[#c1dd58] rounded">Search</button>
+        </form>
+    </div>
+    <div class="flex justify-center">
+        <div class="flex flex-col items-right bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-2xl dark:border-gray-700 dark:bg-gray-800">
+            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ character.getImage }}" alt="{{ character.getName }}">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ character.getName }}</h5>
+                <p class="mb-3 font-normal text-white-700 dark:text-gray-400">
+                    <span class="inline-flex items-left justify-left h-3 w-3 rounded-full {{ character.getStatus == 'Alive' ? 'bg-green-500' : character.getStatus == 'Dead' ? 'bg-red-500' : 'bg-gray-500' }}"><span class="sr-only">{{ character.getStatus }}</span></span> <b>{{ character.getStatus }} - {{ character.getSpecies }}</b><br>
+                    <br>
+                    <span>Episodes:</span>
+                <div class="episode-list">
+                    <ul>
+                        {% for episode in character.getEpisodes %}
+                            <li>{{ episode.name }} - Episode {{ episode.number }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                </p>
+            </div>
+        </div>
+        <br>
+    </div>
+    <style>
+        .episode-list {
+            max-height: 160px;
+            overflow-y: auto;
+        }
+
+        .episode-list ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .episode-list li {
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+    </style>
+{% endblock %}

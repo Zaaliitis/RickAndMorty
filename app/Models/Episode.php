@@ -2,30 +2,34 @@
 
 namespace App\Models;
 
-use App\ApiClient;
-
 class Episode
 {
+    private int $id;
     private string $url;
     private string $episodeName;
     private string $episodeNumber;
     private array $characters;
-    private ApiClient $client;
+
 
     public function __construct(
+        int $id,
         string $url,
         string $episodeName,
         string $episodeNumber,
         array  $characters
     )
     {
+        $this->id = $id;
         $this->url = $url;
         $this->episodeNumber = $episodeNumber;
         $this->episodeName = $episodeName;
         $this->characters = $characters;
-        $this->client = new ApiClient();
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
     public function getUrl(): string
     {
         return $this->url;
@@ -43,20 +47,7 @@ class Episode
 
     public function getCharacters(): array
     {
-        $names = [];
+        return $this->characters;
 
-        $characters = $this->client->getCharacters(1);
-        foreach ($characters as $character) {
-            /** @var Character $character */
-            if (in_array($character->getUrl(), $this->characters)) {
-                $names[] = $character->getName();
-            }
-        }
-
-        if (empty($names)) {
-            $names[] = "No one lives here";
-        }
-
-        return $names;
     }
 }

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}Episode - {{ episode.episodeNumber }} - Rick and Morty{% endblock %}
+{% block content %}
+    <div class="flex justify-center">
+        <div class="flex flex-col items-right bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ episode.episodeName }}</h5>
+                <p class="mb-3 font-normal text-gray-900 dark:text-white">
+                    {{ episode.episodeNumber }}
+                    <br>
+                    Characters in episode:
+                    {% for character in episode.getCharacters %}
+                <ul><a href="/search?name={{ character }}" class="text-white hover:underline">{{ character }}</a></ul>
+                {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <br>
+{% endblock %}

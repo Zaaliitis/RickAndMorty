@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\ApiClient;
 
 class Character
 {
+    private int $id;
     private string $name;
     private string $status;
     private string $species;
@@ -13,22 +13,26 @@ class Character
     private string $locationName;
     private string $locationUrl;
     private string $image;
-    private string $firstEpisode;
+    private Episode $firstEpisode;
     private string $url;
-    private ApiClient $client;
+    private array $episodes;
+
 
     public function __construct(
-        string $name,
-        string $status,
-        string $species,
-        string $gender,
-        string $locationName,
-        string $locationUrl,
-        string $image,
-        string $firstEpisode,
-        string $url
+        int $id,
+        string  $name,
+        string  $status,
+        string  $species,
+        string  $gender,
+        string  $locationName,
+        string  $locationUrl,
+        string  $image,
+        Episode $firstEpisode,
+        array $episodes,
+        string  $url
     )
     {
+        $this->id = $id;
         $this->name = $name;
         $this->status = $status;
         $this->species = $species;
@@ -38,25 +42,25 @@ class Character
         $this->image = $image;
         $this->firstEpisode = $firstEpisode;
         $this->url = $url;
-        $this->client = new ApiClient();
+        $this->episodes = $episodes;
     }
 
+    public function getEpisodes(): array
+    {
+        return $this->episodes;
+    }
+    public function getId(): int
+    {
+        return $this->id;
+    }
     public function getName(): string
     {
         return $this->name;
     }
 
-    public function getFirstEpisode(): string
+    public function getFirstEpisode(): Episode
     {
-        $episodes = $this->client->getEpisodes();
-        foreach ($episodes as $episode) {
-            /** @var Episode $episode */
-            $url = $episode->getUrl();
-            if ($url === $this->firstEpisode) {
-                return $episode->getEpisodeName();
-            }
-        }
-        return "Unknown episode";
+        return $this->firstEpisode;
     }
 
     public function getGender(): string

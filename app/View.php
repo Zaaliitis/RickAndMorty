@@ -21,4 +21,5 @@ class View
     {
         return $this->path;
     }
+
 }

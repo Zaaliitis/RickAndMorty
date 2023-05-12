@@ -14,22 +14,96 @@ class Controller
         $this->client = new ApiClient();
     }
 
-    public function characters(): View
+    public function home(): View
     {
         $page = $_GET['page'] ?? 1;
         $characters = $this->client->getCharacters($page);
-        return new View("characters", ['characters' => $characters, 'page' => $page]);
+
+        $content = array_merge(
+            $this->getCommonData(),
+            [
+                'characters' => $characters,
+                'page' => $page,
+            ]
+        );
+
+        return new View("characters", $content);
     }
-    public function episodes(): View
+
+    public function character(): View
     {
-        $page = $_GET['page'] ?? 1;
-        $episodes = $this->client->getEpisodes($page);
-        return new View("episodes", ['episodes' => $episodes, 'page' => $page]);
+        $id = $_GET['id'] ?? null;
+        $character = $this->client->getCharacter($id);
+
+        $content = array_merge(
+            $this->getCommonData(),
+            [
+                'character' => $character,
+                'id' => $id,
+            ]
+        );
+
+        return new View("character", $content);
     }
-    public function locations(): View
+
+    public function search(): View
     {
+        $name = $_GET['name'] ?? '';
         $page = $_GET['page'] ?? 1;
+        $characters = $this->client->getCharactersByName($name, $page);
+
+        $content = array_merge(
+            $this->getCommonData(),
+            [
+                'characters' => $characters,
+                'name' => $name,
+                'page' => $page,
+            ]
+        );
+
+        return new View("characters", $content);
+    }
+
+    public function episode(): View
+    {
+        $id = $_GET['id'] ?? 1;
+        $episode = $this->client->getEpisode($id);
+
+        $content = array_merge(
+            $this->getCommonData(),
+            [
+                'episode' => $episode,
+                'id' => $id,
+            ]
+        );
+
+        return new View("episode", $content);
+    }
+
+    public function location(): View
+    {
+        $id = $_GET['id'] ?? 1;
+        $location = $this->client->getLocation($id);
+
+        $content = array_merge(
+            $this->getCommonData(),
+            [
+                'location' => $location,
+                'id' => $id,
+            ]
+        );
+
+        return new View("location", $content);
+    }
+
+    private function getCommonData(): array
+    {
         $locations = $this->client->getLocations();
-        return new View("locations", ['locations' => $locations, 'page' => $page]);
+        $episodes = $this->client->getEpisodes();
+
+        return [
+            'locations' => $locations,
+            'episodes' => $episodes,
+        ];
     }
 }

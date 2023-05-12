@@ -1,29 +1,37 @@
 {% extends 'base.html.twig' %}
 {% block title %}Characters - Rick and Morty{% endblock %}
 {% block content %}
-<div class="container mx-auto columns-3">
-    {% for character in characters %}
+    <div class="flex justify-center">
+        <form action="/search" method="GET" class="flex items-center mb-4">
+            <input type="text" name="name" placeholder="Search by name" value="" class="px-4 py-2 border border-gray-300 rounded-md w-48" />
+            <button type="submit" class="ml-4 px-4 py-2 text-[#bddf59] bg-[#45b0c4] border border-[#c1dd58] rounded">Search</button>
+        </form>
+    </div>
+    <div class="container mx-auto columns-3">
+        {% for character in characters %}
+            <a href="/character?id={{ character.id }}" class="flex flex-col items-right bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
 
-        <a href="#" class="flex flex-col items-right bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+
             <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ character.image }}" alt="{{ character.name }}">
-            <div class="flex flex-col justify-between p-4 leading-normal">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ character.name }}</h5>
-                <p class="mb-3 font-normal text-white-700 dark:text-gray-400">
-                    <span class="inline-flex items-left  justify-left h-3 w-3 rounded-full {{ character.status == 'Alive' ? 'bg-green-500' : character.status == 'Dead' ? 'bg-red-500' : 'bg-gray-500' }}"><span class="sr-only">{{ character.status }}</span></span> <b>{{ character.status }} - {{ character.species }}</b><br>
-                    <br>
-                    <span>Last known location: {{ character.locationName }}</span>
-                    <br>
-                    <span>First seen: {{ character.firstEpisode }}</span>
-                </p>
-            </div>
-        </a>
-        <br>
-    {% endfor %}
+                <div class="flex flex-col justify-between p-4 leading-normal">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ character.name }}</h5>
+                    <p class="mb-3 font-normal text-white-700 dark:text-gray-400">
+                        <span class="inline-flex items-left justify-left h-3 w-3 rounded-full {{ character.status == 'Alive' ? 'bg-green-500' : character.status == 'Dead' ? 'bg-red-500' : 'bg-gray-500' }}"><span class="sr-only">{{ character.status }}</span></span> <b>{{ character.status }} - {{ character.species }}</b><br>
+                        <br>
+                        <span>Last known location: {{ character.locationName }}</span>
+                        <br>
+                        <span>First seen: {{ character.firstEpisode().getEpisodeName }}</span>
+                    </p>
+                </div>
+            </a>
+            <br>
+        {% endfor %}
 
 </div>
     {% set nextPage = page + 1 %}
     <br>
-    <form action="/" method="get">
+    <form action="/search" method="get">
+        <input type="hidden" name="name" value="{{ name }}">
         <input type="hidden" name="page" value="{{ nextPage }}">
         <button class="bg-[#45b0c4]  text-[#bddf59] stroke-black font-bold py-3 px-10 border border-[#c1dd58] rounded" type="submit">Next Page</button>
     </form>

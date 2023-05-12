@@ -5,10 +5,12 @@ class Router
     public static function response(): ?View
     {
         $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', [\App\Controllers\Controller::class, "characters"]);
-            $r->addRoute('GET', '/home', [\App\Controllers\Controller::class, "characters"]);
-            $r->addRoute('GET', '/locations', [\App\Controllers\Controller::class, "locations"]);
-            $r->addRoute('GET', '/episodes', [\App\Controllers\Controller::class, "episodes"]);
+            $r->addRoute('GET', '/', [\App\Controllers\Controller::class, "home"]);
+            $r->addRoute('GET', '/search', [\App\Controllers\Controller::class, "search"]);
+            $r->addRoute('GET', '/character', [\App\Controllers\Controller::class, "character"]);
+            $r->addRoute('GET', '/home', [\App\Controllers\Controller::class, "home"]);
+            $r->addRoute('GET', '/location', [\App\Controllers\Controller::class, "location"]);
+            $r->addRoute('GET', '/episode', [\App\Controllers\Controller::class, "episode"]);
         });
 
         $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -34,6 +36,7 @@ class Router
                 $method = $handler[1];
                 /** @var View $response */
                 $response = $class->$method();
+
                 return $response;
 
         }
